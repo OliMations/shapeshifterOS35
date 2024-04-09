@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mx-auto max-sm:px-8 flex flex-wrap gap-5 text-gray-300">
+    <div class="flex flex-col basis-1/2 grow px-3 rounded bg-ss-accent drop-shadow-md">
+        <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Caloric Intake</h6>
+        <p class="mx-4">Calorie Goal: <b id="calorie_goal"></b> kcals</p>
+        <div id="chart-c"></div>
+    </div>
+    <div class="flex flex-col basis-auto grow gap-5">
+        <div class="flex flex-col grow px-3 gap-2 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Page Settings</h6>
+            <div date-rangepicker class="mx-auto mt-5">
+                <input id="start_date" datepicker datepicker-autohide oninput="dateupdate(this.value)" type="text" class="bg-ss-purple py-2 px-5 rounded text-center drop-shadow-md" placeholder="Select date">
+                <p class="inline">to</p>
+                <input id="end_date" datepicker datepicker-autohide onchange="dateupdate(this.value)" type="text" class="bg-ss-purple py-2 px-5 rounded text-center drop-shadow-md" placeholder="Select date">
+            </div>
+            <div class="mx-auto mb-2">
+                <button type="button" onclick="dateupdate()"
+                class="bg-ss-blue hover:bg-ss-purple text-white text py-2 px-8 mt-auto rounded-md drop-shadow-md">Update Dates</button>
+                <button type="button" onclick="pdf_download()"
+                class="bg-ss-blue hover:bg-ss-purple text-white text py-2 px-8 mt-auto rounded-md drop-shadow-md">Generate PDF</button>
+            </div>
+        </div>
+        <div class="flex flex-col grow px-3 gap-1 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Caloric Intake Breakdown</h6>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="day_cal">0</b> kcals per day!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="week_cal">0</b> kcals per week!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="month_cal">0</b> kcals per month!</p>
+        </div>
+    </div>
+    <div class="flex flex-col grow px-3 rounded bg-ss-accent drop-shadow-md">
+        <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Protein Intake</h6>
+        <p class="mx-4">Protein Goal: <b id="protein_goal"></b> g</p>
+        <div id="chart-p"></div>
+    </div>
+
+    <div class="flex flex-col basis-auto grow gap-5">
+        <div class="flex flex-col grow px-3 gap-1 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Protein Intake Breakdown</h6>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="day_pro">0</b> g per day!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="week_pro">0</b> g per week!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="month_pro">0</b> g per month!</p>
+            <p class="mx-4">This constitutes <b id="portion_pro">0</b>% of your diet!</p>
+        </div>
+        <div class="flex flex-col grow px-3 gap-1 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Carbohydrate Intake Breakdown</h6>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="day_carb">0</b> g per day!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="week_carb">0</b> g per week!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="month_carb">0</b> g per month!</p>
+            <p class="mx-4">This constitutes <b id="portion_carb">0</b>% of your diet!</p>
+        </div>
+    </div>
+
+    <div class="flex flex-col grow px-3 rounded bg-ss-accent drop-shadow-md">
+        <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Carbohydrate Intake</h6>
+        <p class="mx-4">Carbohydrate Goal: <b id="carb_goal"></b> g</p>
+        <div id="chart-ch"></div>
+    </div>
+
+    <div class="flex flex-col grow px-3 rounded bg-ss-accent drop-shadow-md">
+        <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Fat Intake</h6>
+        <p class="mx-4">Fat Goal: <b id="fat_goal"></b> g</p>
+        <div id="chart-f"></div>
+    </div>    
+
+    <div class="flex flex-col basis-auto grow gap-5">
+        <div class="flex flex-col grow px-3 gap-1 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Fat Intake Breakdown</h6>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="day_fat">0</b> g per day!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="week_fat">0</b> g per week!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="month_fat">0</b> g per month!</p>
+            <p class="mx-4">This constitutes <b id="portion_fat">0</b>% of your diet!</p>
+        </div>
+        <div class="flex flex-col grow px-3 gap-1 rounded bg-ss-accent drop-shadow-md text-center">
+            <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Sugar Intake Breakdown</h6>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="day_sug">0</b> g per day!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="week_sug">0</b> g per week!</p>
+            <p class="mx-4">You consume an average of <b class="text-xl" id="month_sug">0</b> g per month!</p>
+            <p class="mx-4">This constitutes <b id="portion_sug">0</b>% of your diet!</p>
+        </div>
+    </div>
+
+    <div class="flex flex-col grow px-3 rounded bg-ss-accent drop-shadow-md">
+        <h6 class="text-2xl font-semibold mx-4 mt-4 text-white">Sugar Intake</h6>
+        <p class="mx-4">Sugar Goal: <b id="sugar_goal"></b> g</p>
+        <div id="chart-s"></div>
+    </div>
+</div>
+
+<script>
+const options = {
+    colors: ["#006466", "#a6a6a6"],
+    series: [],
+    chart: {
+        group: "synced",
+        type: "bar",
+        height: "320px",
+        width: "100%",
+        stacked: true,
+        toolbar: {
+            show: false,
+        },
+    },
+    tooltip: {
+        theme: "dark",
+        style: {
+            fontFamily: 'Montserrat',
+            fontSize: "14px"
+          }
+    },
+    legend: {
+        show: true,
+        fontFamily: 'Montserrat',
+        fontSize: "16px",
+        labels: {
+          colors: "#fff"
+        },
+      },
+    plotOptions: {
+        bar: {
+            borderRadiusApplication: "end",
+            borderRadius: 5,
+        },
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    states: {
+        hover: {
+            filter: {
+                type: "darken",
+                value: 1,
+            },
+        },
+    },
+
+    grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            top: -25,
+            left: 30
+        },
+    },
+    xaxis: {
+        floating: false,
+        labels: {
+            show: true,
+            style: {
+                fontFamily: 'Montserrat',
+                fontSize: "14px",
+                colors: "#d1d5db"
+              }
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+        show: false,
+        },
+    },
+    yaxis: {
+        show: false,
+    },
+    fill: {
+        opacity: 1,
+    },
+    noData: {
+        text: 'Loading...'
+      }
+    }
+    
+    const chartC = new ApexCharts(document.getElementById("chart-c"), options);
+    const chartP = new ApexCharts(document.getElementById("chart-p"), options);
+    const chartCH = new ApexCharts(document.getElementById("chart-ch"), options);
+    const chartF = new ApexCharts(document.getElementById("chart-f"), options);
+    const chartS = new ApexCharts(document.getElementById("chart-s"), options);
+    chartC.render();
+    chartP.render();
+    chartCH.render();
+    chartF.render();
+    chartS.render();
+
+    function data_renderer(data) {
+        chartC.updateSeries(data["bar_chart"]["calories"]);
+        document.getElementById("calorie_goal").innerText = data["bar_chart"]["calories"][0]["data"][1]["the_goal"];
+        chartP.updateSeries(data["bar_chart"]["protein"]);
+        document.getElementById("protein_goal").innerText = data["bar_chart"]["protein"][0]["data"][1]["the_goal"];
+        chartCH.updateSeries(data["bar_chart"]["carbohydrates"]);
+        document.getElementById("carb_goal").innerText = data["bar_chart"]["carbohydrates"][0]["data"][1]["the_goal"];
+        chartF.updateSeries(data["bar_chart"]["fats"]);
+        document.getElementById("fat_goal").innerText = data["bar_chart"]["fats"][0]["data"][1]["the_goal"];
+        chartS.updateSeries(data["bar_chart"]["sugar"]);
+        document.getElementById("sugar_goal").innerText = data["bar_chart"]["sugar"][0]["data"][1]["the_goal"];
+
+        document.getElementById("day_cal").innerText = data["day_calories"];
+        document.getElementById("week_cal").innerText = data["week_calories"];
+        document.getElementById("month_cal").innerText = data["month_calories"];
+        document.getElementById("day_pro").innerText = data["day_protein"];
+        document.getElementById("week_pro").innerText = data["week_protein"];
+        document.getElementById("month_pro").innerText = data["month_protein"];
+        document.getElementById("day_carb").innerText = data["day_carbohydrates"];
+        document.getElementById("week_carb").innerText = data["week_carbohydrates"];
+        document.getElementById("month_carb").innerText = data["month_carbohydrates"];
+        document.getElementById("day_fat").innerText = data["day_fats"];
+        document.getElementById("week_fat").innerText = data["week_fats"];
+        document.getElementById("month_fat").innerText = data["month_fats"];
+        document.getElementById("day_sug").innerText = data["day_sugar"];
+        document.getElementById("week_sug").innerText = data["week_sugar"];
+        document.getElementById("month_sug").innerText = data["month_sugar"];
+        document.getElementById("portion_pro").innerText = data["protein_percent"];
+        document.getElementById("portion_carb").innerText = data["carbohydrates_percent"];
+        document.getElementById("portion_fat").innerText = data["fats_percent"];
+        document.getElementById("portion_sug").innerText = data["sugar_percent"];
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/graphs', {
+            method: 'POST',
+            body: JSON.stringify({
+                start_date: null,
+                end_date: null
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(response => response.json())
+        .then(data => data_renderer(data));
+    });
+
+    function pdf_download() {
+        const startDate = document.getElementById("start_date");
+        const endDate = document.getElementById("end_date");
+        
+        window.open("./pdf/download?start_date=" + document.getElementById("start_date").value + "&end_date=" + document.getElementById("end_date").value, target="_blank")
+    }
+
+    function dateupdate(date) {
+        const startDate = document.getElementById("start_date");
+        const endDate = document.getElementById("end_date");
+        fetch('/graphs', {
+            method: 'POST',
+            body: JSON.stringify({
+                start_date: startDate.value,
+                end_date: endDate.value
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+            }
+        })
+        .then(response => response.json())
+        .then(data => data_renderer(data));
+    }
+</script>
+
+{% endblock %}

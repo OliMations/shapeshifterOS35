@@ -1,0 +1,25 @@
+{% extends "alt_base.html" %}
+{% block content %}
+    <div class="flex flex-col mx-auto p-8 mb-4 bg-ss-accent rounded drop-shadow-md">
+        <h1 class="text-4xl font-bold mb-4 text-white">Member Login</h1>
+        <form action="/login" method="post" class="flex flex-col h-full">
+            <div class="mb-4">
+                <label for="username" class="block text-gray-300  font-medium mb-2">Username</label>
+                <input type="text" id="username" name="username" class="w-full p-2 border rounded-md">
+            </div>
+            <div class="mb-1">
+                <label for="password" class="block text-gray-300  font-medium mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full p-2 border rounded-md">
+            </div>
+            <a class="mb-4 text-gray-400" href="#">Forgot Password</a>
+            <div class="drop-shadow-xl mt-auto text-gray-300">
+                <button type="submit"
+                    class="bg-ss-blue hover:bg-ss-purple text-white px-5 py-2 rounded-md drop-shadow-md">Login</button>
+                <button type="button" onclick="location.href='/register';"
+                class="text-white px-2 rounded-md ">Register</button>
+            </div>
+        </form>
+
+            
+    </div>
+{% endblock %}

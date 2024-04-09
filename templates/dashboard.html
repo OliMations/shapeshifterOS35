@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto max-sm:px-8 flex gap-5 grow flex-wrap h-fit">
+    <div class="flex justify-between w-full">
+      <p class="text-6xl font-semibold text-white">Welcome back, <b class="text-ss-bluel">{{ user_data.username }}!</b></p>
+      <div class="my-auto">
+        <button type="button" onclick="timeframe_update(1)" id="today_button"
+        class="bg-ss-blue bg-ss-purple hover:bg-ss-purple text-white py-2 px-4 rounded-md drop-shadow-md">Today</button>
+        <button type="button" onclick="timeframe_update(7)" id="week_button"
+        class="bg-ss-blue hover:bg-ss-purple text-white py-2 px-4 rounded-md drop-shadow-md">Last 7 Days</button>
+        <button type="button" onclick="timeframe_update(30)" id="month_button"
+        class="bg-ss-blue hover:bg-ss-purple text-white py-2 px-4 rounded-md drop-shadow-md">Last 30 Days</button>
+      </div>
+    </div>
+    <div class="flex flex-col grow px-8 pt-4 bg-ss-accent rounded drop-shadow-md text-gray-300">
+      <h2 class="text-4xl font-semibold text-white">Total Calories</h2>
+      <p class="font-extrabold text-ss-bluel text-2xl"><b id="cal_val" class="text-7xl">0</b> kcal</p>
+      <p id="change_message" class="text-2xl mb-6">0% worse</p>
+      <h3 class="text-3xl font-semibold">Estimated Goal</h3>
+      <p class="text-2xl font-extrabold text-ss-purple"><b id="cal_est"class="text-5xl">0</b> kcal</p>
+      <button type="button" onclick="location.href='/graphs';"
+      class="bg-ss-blue hover:bg-ss-purple text-white py-2 mb-4 mt-auto rounded-md drop-shadow-md">More Info</button>
+    </div>
+
+    <div class="flex flex-col grow  bg-ss-accent size-[30rem] rounded drop-shadow-md h-fit">
+        <h2 class="text-4xl font-semibold text-white mt-4 text-center">Nutrient <b class="text-ss-purple">Graph</b></h2>
+        <div id="piechart"></div>
+    </div>
+
+    <div class="flex flex-col gap-2 grow px-4 bg-ss-accent rounded drop-shadow-md text-center text-gray-300">
+      <h2 class="text-3xl mt-5 font-semibold text-white mb-2">Nutrient Breakdown</h2>
+      <p class="text-2xl">Carbohydrates<br><b id="nut_carb" class="text-3xl">0 / 0</b> g</p>
+      <p class="text-2xl">Fats<br><b id="nut_fat" class="text-3xl">0 / 0</b> g</p>
+      <p class="text-2xl">Sugar<br><b id="nut_sug" class="text-3xl">0 / 0</b> g</p>
+      <p class="text-2xl">Protein<br><b id="nut_prot" class="text-3xl">0 / 0</b> g</p>
+    </div>
+
+    <div class="flex flex-col grow bg-ss-accent size-[52rem] rounded drop-shadow-md h-auto">
+      <h2 class="text-2xl mt-2 font-semibold text-white text-center">Target <b class="text-ss-purple">Success</b> Breakdown</h2>
+      <div id="linechart"></div>
+    </div>
+
+    <div class="flex flex-col grow bg-ss-accent rounded drop-shadow-md text-center text-gray-300 text-xl">
+      <h2 class="text-3xl mt-5 font-semibold text-white">Last Food Eaten</h2>
+      <p id="food-name" class="text-xl mb-3 italic text-wrap w-64 mx-auto">None</p>
+      <p>Calories<br><b id="food-cal" class="text-2xl">0</b> kcal</p>
+      <p>Carbohydrates<br><b id="food-carb" class="text-2xl">0</b> g</p>
+      <p>Fats<br><b id="food-fat" class="text-2xl">0</b> g</p>
+      <p>Sugar<br><b id="food-sug" class="text-2xl">0</b> g</p>
+      <p>Protein<br><b id="food-pro" class="text-2xl">0</b> g</p>
+      <button type="button" onclick="location.href='/addfood';"
+      class="bg-ss-blue hover:bg-ss-purple text-white mx-8 py-2 mb-4 mt-auto rounded-md drop-shadow-md">Lookup Foods</button>
+    </div>
+
+
+</div>
+
+<script>
+    var options = {
+        // colors: ["#3aa15a", "#87D4F9"],
+        labels: ["Carbs", "Fats", "Sugar", 'Protein', "Calories"],
+        series: [100,100,100,100,100],
+        chart: {
+          width: "100%",
+          type: 'radialBar',
+        },
+        legend: {
+          show: true,
+          position: "right",
+          horizontalAlign: "right",
+          floating: false,
+          fontFamily: 'Montserrat',
+          fontSize: "21px",
+          offsetY: 50,
+          offsetX: -5,
+          labels: {
+            colors: "#fff"
+          },
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 0,
+              size: '40%',
+              background: '#19212e',
+            },
+            dataLabels: {
+              show: true,
+            },
+            track: {
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                blur: 4,
+                opacity: 0.15
+              },
+            },
+            dataLabels: {
+              name: {
+                offsetY: -10,
+                color: "#fff",
+                fontFamily: 'Montserrat',
+                fontSize: "18px"
+              },
+              value: {
+                color: "#fff",
+                offsetY: 5,
+                fontSize: "30px",
+                fontFamily: 'Montserrat',
+                show: true
+              }
+            }
+          },
+        },
+  }
+
+    var line_options = {
+      // set grid lines to improve the readability of the chart, learn more here: https://apexcharts.com/docs/grid/
+      grid: {
+        show: true,
+        strokeDashArray: 4,
+        padding: {
+          top: -15,
+        }
+      },
+      series: [],
+      chart: {
+        height: "100%",
+        width: "100%",
+        type: "line",
+      
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      legend: {
+        show: true,
+        fontFamily: 'Montserrat',
+        fontSize: "16px",
+        labels: {
+          colors: "#fff"
+        },
+      },
+      tooltip: {
+        theme: "dark",
+        style: {
+            fontFamily: 'Montserrat',
+            fontSize: "14px"
+          }
+      },
+      stroke: {
+        width: 4,
+        curve: "smooth",
+      },
+      xaxis: {
+        labels: {
+          show: true,
+          style: {
+            fontFamily: 'Montserrat',
+            fontSize: "14px",
+            colors: "#fff"
+          }
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: true,
+        },
+      },
+      yaxis: {
+        show: true,
+        min: 30,
+        max: 130,
+        labels: {
+          formatter: function (value) {
+            return value + "%";
+          },
+          style: {
+            fontFamily: 'Montserrat',
+            fontSize: "14px",
+            colors: "#d1d5db"
+          }
+        }
+      },
+      noData: {
+        text: 'Loading...',
+        style: {
+          fontSize: '24px',
+          fontFamily: 'Montserrat',
+          color: '#fff'
+        }
+      }
+      }
+
+    const chart = new ApexCharts(document.querySelector("#piechart"), options);
+    chart.render();
+    const linechart = new ApexCharts(document.querySelector("#linechart"), line_options);
+    linechart.render();
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('/dashboard', {
+          method: 'POST',
+          body: JSON.stringify({
+            task: 'update',
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data)
+          chart.updateSeries([data["carbohydrates_left"], data["fats_left"], data["sugar_left"],
+          data["protein_left"], data["calories_left"]]);
+          document.getElementById("change_message").innerText = data["change_message"];
+          document.getElementById("cal_val").innerText = data["calories_consumed"];
+          document.getElementById("cal_est").innerText = data["calorie_goal"];
+          document.getElementById("nut_carb").innerText = data["carbohydrates_consumed"] + " g / " + data["carbohydrates_limit"];
+          document.getElementById("nut_fat").innerText = data["fats_consumed"] + " g / " + data["fats_limit"];
+          document.getElementById("nut_sug").innerText = data["sugar_consumed"] + " g / " + data["sugar_limit"];
+          document.getElementById("nut_prot").innerText = data["protein_consumed"] + " g / " + data["protein_goal"];
+          document.getElementById("food-name").innerText = data["food"]["name"];
+          document.getElementById("food-cal").innerText = data["food"]["calories"];
+          document.getElementById("food-carb").innerText = data["food"]["carbohydrate"];
+          document.getElementById("food-fat").innerText = data["food"]["fat"];
+          document.getElementById("food-sug").innerText = data["food"]["sugar"];
+          document.getElementById("food-pro").innerText = data["food"]["protein"];
+
+          linechart.updateSeries(data["intake_data_week"]);
+          linechart.updateOptions({
+            xaxis: {
+              categories: data["dates"]
+            }
+          });
+          
+      });
+  });
+
+  function timeframe_update(timeframe) {
+    if (timeframe == 1) {
+      document.getElementById("today_button").classList.add("bg-ss-purple");
+      document.getElementById("week_button").classList.remove("bg-ss-purple");
+      document.getElementById("month_button").classList.remove("bg-ss-purple");
+    } else if (timeframe == 7) {
+      document.getElementById("today_button").classList.remove("bg-ss-purple");
+      document.getElementById("week_button").classList.add("bg-ss-purple");
+      document.getElementById("month_button").classList.remove("bg-ss-purple");
+    } else {
+      document.getElementById("today_button").classList.remove("bg-ss-purple");
+      document.getElementById("week_button").classList.remove("bg-ss-purple");
+      document.getElementById("month_button").classList.add("bg-ss-purple");
+    }
+  
+    fetch('/dashboard', {
+        method: 'POST', 
+        body: JSON.stringify({
+          task: 'timeframe',
+          data: timeframe
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        chart.updateSeries([data["carbohydrates_left"], data["fats_left"], data["sugar_left"],
+        data["protein_left"], data["calories_left"]]);
+        document.getElementById("change_message").innerText = data["change_message"];
+        document.getElementById("cal_val").innerText = data["calories_consumed"];
+        document.getElementById("cal_est").innerText = data["calorie_goal"];
+        document.getElementById("nut_carb").innerText = data["carbohydrates_consumed"] + " g / " + data["carbohydrates_limit"];
+        document.getElementById("nut_fat").innerText = data["fats_consumed"] + " g / " + data["fats_limit"];
+        document.getElementById("nut_sug").innerText = data["sugar_consumed"] + " g / " + data["sugar_limit"];
+        document.getElementById("nut_prot").innerText = data["protein_consumed"] + " g / " + data["protein_goal"];
+        document.getElementById("food-name").innerText = data["food"]["name"];
+        document.getElementById("food-cal").innerText = data["food"]["calories"];
+        document.getElementById("food-carb").innerText = data["food"]["carbohydrate"];
+        document.getElementById("food-fat").innerText = data["food"]["fat"];
+        document.getElementById("food-sug").innerText = data["food"]["sugar"];
+        document.getElementById("food-pro").innerText = data["food"]["protein"];
+
+        linechart.updateSeries(data["intake_data_week"]);
+        linechart.updateOptions({
+          xaxis: {
+            categories: data["dates"]
+          }
+        });
+    })};
+  </script>
+
+{% endblock %}

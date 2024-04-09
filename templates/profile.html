@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto p-8 rounded shadow-lg bg-ss-accent text-gray-300">
+    <h1 class="text-5xl font-bold mb-8 text-center text-white">Profile Info</h1>
+    <form class="profile-form" method="post" action="{{ url_for('update_profile') }}">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="username" class="block text-lg font-semibold text-white">Username</label>
+                <input type="text"
+                    class="w-full p-3 border border-gray-300 rounded focus:outline-none text-black"
+                    id="username" name="username" placeholder="Username" value="{{ current_user.username }}" required
+                    readonly>
+            </div>
+            <div>
+                <label for="age" class="block text-lg font-bold text-white">Age</label>
+                <input type="text"
+                    class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500 text-black" id="age"
+                    name="age" placeholder="Age" value="{{ current_user.age }}" required>
+            </div>
+            <div>
+                <label for="height" class="block text-lg font-bold text-white">Height (in cm)</label>
+                <input type="number"
+                    class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500 text-black"
+                    id="height" name="height" placeholder="Enter height" value="{{ current_user.height }}" required>
+            </div>
+            <div>
+                <label for="weight" class="block text-lg font-bold text-white">Weight (in kg)</label>
+                <input type="number"
+                    class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-green-500 text-black"
+                    id="weight" name="weight" placeholder="Enter weight" value="{{ current_user.weight }}" required>
+            </div>
+            <div class="col-span-2">
+                <label class="block text-lg font-bold text-white">Sex</label>
+                <div class="flex items-center space-x-4">
+                    <input type="radio" id="male" name="gender" value="Male" {% if current_user.gender=="Male" %}
+                        checked {% endif %}>
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female" {% if current_user.gender=="Female" %}
+                        checked {% endif %}>
+                    <label for="female">Female</label>
+                </div>
+            </div>
+            <div class="col-span-2">
+                <label class="block text-lg font-bold text-white">Activity Level</label>
+                <div class="flex items-center space-x-4">
+                    <input type="radio" id="sedentary" name="activity_level" value="sedentary" {% if
+                        current_user.activity_level=="sedentary" %} checked {% endif %}>
+                    <label for="sedentary">Sedentary</label>
+                    <input type="radio" id="ac_moderate" name="activity_level" value="moderate" {% if
+                        current_user.activity_level=="moderate" %} checked {% endif %}>
+                    <label for="ac_moderate">Moderate</label>
+                    <input type="radio" id="active" name="activity_level" value="active" {% if
+                        current_user.activity_level=="active" %} checked {% endif %}>
+                    <label for="active">Active</label>
+                </div>
+            </div>
+            <div class="col-span-2">
+                <label class="block text-lg font-bold text-white">Adjustment Pace</label>
+                <div class="flex items-center space-x-4">
+                    <input type="radio" id="slow" name="adjustment_pace" value="slow" {% if
+                        current_user.adjustment_pace=="slow" %} checked {% endif %}>
+                    <label for="slow">Slow</label>
+                    <input type="radio" id="moderate" name="adjustment_pace" value="moderate" {% if
+                        current_user.adjustment_pace=="moderate" %} checked {% endif %}>
+                    <label for="moderate">Moderate</label>
+                    <input type="radio" id="fast" name="adjustment_pace" value="fast" {% if
+                        current_user.adjustment_pace=="fast" %} checked {% endif %}>
+                    <label for="fast">Fast</label>
+                </div>
+            </div>
+            <div class="col-span-2">
+                <label class="block text-lg font-bold text-white">Direction</label>
+                <div class="flex items-center space-x-4">
+                    <input type="radio" id="weight_loss" name="direction" value="weight_loss" {% if
+                        current_user.direction=="weight_loss" %} checked {% endif %}>
+                    <label for="weight_loss">Weight Loss</label>
+                    <input type="radio" id="maintenance" name="direction" value="maintenance" {% if
+                        current_user.direction=="maintenance" %} checked {% endif %}>
+                    <label for="maintenance">Maintenance</label>
+                    <input type="radio" id="weight_gain" name="direction" value="weight_gain" {% if
+                        current_user.direction=="weight_gain" %} checked {% endif %}>
+                    <label for="weight_gain">Weight Gain</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit"
+                class="mt-8 bg-ss-blue hover:bg-ss-purple text-white py-3 px-16 rounded">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Search Food</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <div class="">
+            <h1 class="text-2xl font-bold text-center">Search Food</h1>
+            <form class="bg-white rounded shadow-md p-4">
+                <div class="mb-4">
+                    <label for="food-search" class="block text-gray-700 text-sm font-bold mb-2">Search for Food</label>
+                    <input type="text" id="food-search" name="food-search"
+                        class="w-full p-2 border border-gray-300 rounded-md" placeholder="Search..." required>
+                </div>
+                <div id="food-details" class="mb-4"></div>
+                <script>
+                    document.getElementById('food-search').addEventListener('input', function () {
+                        var search_term = this.value.trim();
+                        if (search_term === '') {
+                            document.getElementById('food-details').innerHTML = '';
+                            return;
+                        }
+                        fetch('/search?term=' + encodeURIComponent(search_term))
+                            .then(response => response.json())
+                            .then(data => {
+                                var html = '';
+                                var count = 0;
+                                for (var i = 0; i < data.length; i++) {
+                                    var item = data[i];
+                                    if (item[1].toLowerCase().includes(search_term.toLowerCase())) {
+                                        html += '<div class="border-b border-gray-300 py-2 cursor-pointer" onclick="showFoodDetails(' + item[2] + ')">';
+                                        html += '<span class="font-bold">' + item[1] + '</span>';
+                                        html += '<span class="text-gray-500 ml-2">Category: ' + item[0] + '</span>';
+                                        html += '</div>';
+                                        count++;
+                                        if (count >= 20) {
+                                            break;
+                                        }
+                                    }
+                                }
+                                document.getElementById('food-details').innerHTML = html;
+                            });
+                    });
+    
+                    function showFoodDetails(nutritionBankId) {
+                        fetch('/food/' + nutritionBankId)
+                            .then(response => response.json())
+                            .then(data => {
+                                var html = '<h2 class="text-lg font-bold mb-2">' + data.name + '</h2>';
+                                html += '<div class="grid grid-cols-2 gap-x-4">';
+                                html += '<p><strong>Calories:</strong> ' + data.calories + ' kcal</p>';
+                                html += "<br>";
+                                html += '<p><strong>Carbohydrates:</strong> ' + data.carbohydrate + 'g</p>';
+                                html += '<p><strong>Protein:</strong> ' + data.protein + 'g</p>';
+                                html += '<p><strong>Fat:</strong> ' + data.fat + 'g</p>';
+                                html += '<p><strong>Sugar:</strong> ' + data.sugar + 'g</p>';
+                                html += '</div>';
+                                document.getElementById('food-details').innerHTML = html;
+                                document.getElementById('food-details').classList.remove('hidden');
+                            });
+                    }
+                </script>
+            </form>
+        </div>
+    
+    </body>
+</html>

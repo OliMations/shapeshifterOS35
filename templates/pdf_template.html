@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shapeshifter</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    </head>
+    <body class="container pl-8 flex flex-col h-screen">
+        <h1 class="text-3xl underline">Nutrition Report for {{ user_data.username }}</h1>
+        <p class="text-xl">Date Range: {{ user_data.start_date }} - {{ user_data.end_date }}</p>
+        <hr class="my-2">
+        <div class="flex flex-col">
+          <p>Age: <i>{{ user_data.age }}</i></p>
+          <p>Sex: <i>{{ user_data.sex }}</i></p>
+          <p>Height: <i>{{ user_data.height }}</i> cm</p>
+          <p>Weight: <i>{{ user_data.weight }}</i> kg</p>
+          <p>Activity Level: <i>{{ user_data.activity_level }}</i></p>
+          <p>Adjustment Pace: <i>{{ user_data.adjustment_pace }}</i></p>
+        </div>
+
+        <hr class="my-5">
+        
+        <div class="flex flex-wrap">
+            <div class="flex w-full">
+                <div class="basis-2/5 ">
+                    <h6 class="text-xl font-semibold">Caloric Intake Breakdown</h6>
+                    <div id="chart-c"></div>
+                </div>
+                <div class="mt-8">
+                    <p class="mx-4">Calorie Goal: <b id="calorie_goal">{{ user_data.bar_chart.calories[0].data[1].the_goal }}</b> kcals</p>
+                    <p class="mx-4">Daily Average: <b id="day_cal">{{ user_data.day_calories }}</b> kcals</p>
+                    <p class="mx-4">Weekly Average: <b id="week_cal">{{ user_data.week_calories }}</b> kcals</p>
+                    <p class="mx-4">Monthly Average: <b id="month_cal">{{ user_data.month_calories }}</b> kcals</p>
+                </div>
+            </div>
+
+            <div class="flex w-full mb-32">
+                <div class="basis-2/5 text-xl ">
+                    <h6 class="text-xl font-semibold">Protein Intake Breakdown</h6>
+                
+                    <div id="chart-p"></div>
+                </div>
+                <div class="mt-8">
+                    <p class="mx-4">Protein Goal: <b id="protein_goal">{{ user_data["bar_chart"]["protein"][0]["data"][1]["the_goal"] }}</b> g</p>
+                    <p class="mx-4">Daily Average: <b id="day_pro">{{ user_data.day_protein }}</b> g</p>
+                    <p class="mx-4">Weekly Average: <b id="week_pro">{{ user_data.week_protein }}</b> g</p>
+                    <p class="mx-4">Monthly Average: <b id="month_pro">{{ user_data.month_protein }}</b> g</p>
+                    <p class="mx-4">Portion of Diet: <b id="portion_pro">{{ user_data.protein_percent }}</b>%</p>
+                </div>
+            </div>
+
+            <div class="flex w-full mt-8">
+                <div class="basis-2/5 text-xl ">
+                    <h6 class="text-xl font-semibold">Carbohydrate Intake Breakdown</h6>
+                    <div id="chart-ch"></div>
+                </div>
+                <div class="mt-8">
+                    <p class="mx-4">Carbohydrate Goal: <b id="carb_goal">{{ user_data["bar_chart"]["carbohydrates"][0]["data"][1]["the_goal"] }}</b> g</p>
+                    <p class="mx-4">Daily Average: <b id="day_carb">{{ user_data.day_carbohydrates }}</b> g</p>
+                    <p class="mx-4">Weekly Average: <b id="week_carb">{{ user_data.week_carbohydrates }}</b> g</p>
+                    <p class="mx-4">Monthly Average: <b id="month_carb">{{ user_data.month_carbohydrates }}</b> g</p>
+                    <p class="mx-4">Portion of Diet: <b id="portion_carb">{{ user_data.carbohydrates_percent }}</b>%</p>
+                </div>
+            </div>
+
+            <div class="flex w-full">
+                <div class="basis-2/5 text-xl">
+                    <h6 class="text-xl font-semibold">Fat Intake Breakdown</h6>
+                    <div id="chart-f"></div>
+                </div>
+                <div class="mt-8">
+                    <p class="mx-4">Fat Goal: <b id="fat_goal">{{ user_data["bar_chart"]["fats"][0]["data"][1]["the_goal"] }}</b> g</p>
+                    <p class="mx-4">Daily Average: <b id="day_fat">{{ user_data.day_fats }}</b> g</p>
+                    <p class="mx-4">Weekly Average: <b id="week_fat">{{ user_data.week_fats }}</b> g</p>
+                    <p class="mx-4">Monthly Average: <b id="month_fat">{{ user_data.month_fats }}</b> g</p>
+                    <p class="mx-4">Portion of Diet: <b id="portion_fat">{{ user_data.fats_percent }}</b>%</p>
+                </div>
+            </div>
+
+            <div class="flex w-full">
+                <div class="basis-2/5 text-xl">
+                    <h6 class="text-xl font-semibold">Sugar Intake Breakdown</h6>
+                    <div id="chart-s"></div>
+                </div>
+                <div class="mt-8">
+                    <p class="mx-4">Sugar Goal: <b id="sugar_goal">{{ user_data["bar_chart"]["sugar"][0]["data"][1]["the_goal"] }}</b> g</p>
+                    <p class="mx-4">Daily Average: <b id="day_sug">{{ user_data.day_sugar }}</b> g</p>
+                    <p class="mx-4">Weekly Average: <b id="week_sug">{{ user_data.week_sugar }}</b> g</p>
+                    <p class="mx-4">Monthly Average: <b id="month_sug">{{ user_data.month_sugar }}</b> g</p>
+                    <p class="mx-4">Portion of Diet: <b id="portion_sug">{{ user_data.sugar_percent }}</b>%</p>
+                </div>
+            </div>
+
+            <hr class=" my-5">
+        </div>
+
+        <footer class="mt-auto">
+            <p class="text-sm">©2024 Team 34 "Shapeshifter"</p>
+        </footer>
+    </body>
+</html>
+
+<script>
+const options = {
+    colors: ["#000000", "#a6a6a6"],
+    series: [],
+    chart: {
+        type: "bar",
+        stacked: true,
+        height: 280,
+        toolbar: {
+            show: false,
+        },
+        animations: {
+            enabled: false,
+        },
+    },
+    grid: {
+        show: true,
+        strokeDashArray: 10,
+
+    },
+    fill: {
+        opacity: 1,
+    }
+    }
+    
+    const chartC = new ApexCharts(document.getElementById("chart-c"), options);
+    const chartP = new ApexCharts(document.getElementById("chart-p"), options);
+    const chartCH = new ApexCharts(document.getElementById("chart-ch"), options);
+    const chartF = new ApexCharts(document.getElementById("chart-f"), options);
+    const chartS = new ApexCharts(document.getElementById("chart-s"), options);
+    chartC.render();
+    chartP.render();
+    chartCH.render();
+    chartF.render();
+    chartS.render();
+    chartC.updateSeries({{ user_data["bar_chart"]["calories"]|safe }});
+    chartP.updateSeries({{ user_data["bar_chart"]["protein"]|safe }});
+    chartCH.updateSeries({{ user_data["bar_chart"]["carbohydrates"]|safe }});
+    chartF.updateSeries({{ user_data["bar_chart"]["fats"]|safe }});
+    chartS.updateSeries({{ user_data["bar_chart"]["sugar"]|safe }});
+</script>

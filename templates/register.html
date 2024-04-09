@@ -1,0 +1,83 @@
+{% extends "alt_base.html" %}
+{% block content %}
+    <div class="flex flex-col mx-auto p-8 mb-4 bg-ss-accent rounded drop-shadow-lg">
+        <h1 class="text-4xl font-bold mb-4 text-white">Member Register</h1>
+        <form action="/register" method="post">
+            <div class="mb-4">
+                <label for="username" class="block text-gray-300  font-medium mb-2">Username</label>
+                <input type="text" id="username" name="username" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-300  font-medium mb-2">Password</label>
+                <input type="password" id="password" name="password" minlength="8" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="confirm_password" class="block text-gray-300  font-medium mb-2">Confirm
+                    Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="height" class="block text-gray-300  font-medium mb-2">Height (in cm)</label>
+                <input type="number" id="height" name="height" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="weight" class="block text-gray-300  font-medium mb-2">Weight (in kg)</label>
+                <input type="number" id="weight" name="weight" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label for="age" class="block text-gray-300  font-medium mb-2">Age</label>
+                <input type="number" id="age" name="age" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4 justify-center">
+                <label class="block text-gray-300 font-medium mb-2">Sex</label>
+                <div>
+                    <input type="radio" id="male" name="gender" value="male" class="mr-2" required>
+                    <label for="male" class="mr-4 text-white ">Male</label>
+                    <input type="radio" id="female" name="gender" value="female" class="mr-2" required>
+                    <label for="female" class="text-white">Female</label>
+                </div>
+            </div>
+
+            <div class="mb-4 justify-left">
+                <label class="block text-gray-300  font-medium mb-2">Activity Level</label>
+                <div>
+                    <input type="radio" id="sedentary" name="activity_level" value="sedentary" class="mr-2" required>
+                    <label for="sedentary" class="mr-4 text-white">Sedentary</label>
+                    <input type="radio" id="ac_moderate" name="activity_level" value="moderate" class="mr-2" required>
+                    <label for="ac_moderate" class="mr-4 text-white">Moderate</label>
+                    <input type="radio" id="active" name="activity_level" value="active" class="mr-2" required>
+                    <label for="active" class="text-white">Active</label>
+                </div>
+            </div>
+
+            <div class="mb-4 justify-center">
+                <label class="block text-gray-300 font-medium mb-2">Adjustment Pace</label>
+                <div>
+                    <input type="radio" id="slow" name="adjustment_pace" value="slow" class="mr-2" required>
+                    <label for="slow" class="mr-4 text-white">Slow</label>
+                    <input type="radio" id="moderate" name="adjustment_pace" value="moderate" class="mr-2" required>
+                    <label for="moderate" class="mr-4 text-white">Moderate</label>
+                    <input type="radio" id="fast" name="adjustment_pace" value="fast" class="mr-2" required>
+                    <label for="fast" class="text-white">Fast</label>
+                </div>
+            </div>
+
+            <div class="mb-4 justify-center">
+                <label class="block text-gray-300  font-medium mb-2">Direction</label>
+                <div>
+                    <input type="radio" id="weight_loss" name="direction" value="weight_loss" class="mr-2" required>
+                    <label for="weight_loss" class="mr-4 text-white">Weight Loss</label>
+                    <input type="radio" id="maintenance" name="direction" value="maintenance" class="mr-2" required>
+                    <label for="maintenance" class="mr-4 text-white">Maintenance</label>
+                    <input type="radio" id="weight_gain" name="direction" value="weight_gain" class="mr-2" required>
+                    <label for="weight_gain" class="text-white">Weight Gain</label>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="bg-ss-blue hover:bg-ss-purple text-white px-5 py-2 rounded-md drop-shadow-md">Register</button>
+            <button type="button" onclick="location.href='/login';"
+            class="text-white px-2 rounded-md">Login</button>
+        </form>
+    </div>
+    {% endblock %}

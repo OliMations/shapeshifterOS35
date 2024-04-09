@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .accordion-title {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-200">
+    <div class="flex justify-between items-center py-4 px-8 bg-blue-500">
+        <h1 class="text-4xl font-bold mb-4 text-white">ShapeShifter</h1>
+        <div>
+            <a href="login" class="text-blue-500 font-bold py-2 px-4 rounded-full"
+                style="display: inline-flex; align-items: center;">
+                <svg fill="#FFFFFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 512 512"
+                    xml:space="preserve" style="margin-right: 8px;">
+                    <g>
+                        <g>
+                            <path d="M429.248,141.439C429.248,63.33,365.985,0,287.808,0c-78.109,0-141.439,63.33-141.439,141.439
+                                c0,78.11,63.33,141.439,141.439,141.439C365.988,282.878,429.248,219.549,429.248,141.439z M181.727,144.499
+                                c0,0-4.079-40.12,24.82-70.72c20.34,20.389,81.261,70.72,187.342,70.72c0,58.498-47.586,106.081-106.081,106.081
+                                S181.727,202.994,181.727,144.499z" />
+                            <path d="M45.049,391.68v62.559v80.919c0,22.365,18.136,40.459,40.459,40.459h404.6c22.365,0,40.459-18.097,40.459-40.459v-80.919
+                                V391.68c0-44.688-36.193-80.919-80.919-80.919H377.91c-5.07,0-11.46,3.422-14.271,7.639l-70.735,99.982
+                                c-2.812,4.22-7.372,4.22-10.184,0l-70.738-99.986c-2.812-4.22-9.202-7.638-14.272-7.638h-71.742
+                                C81.319,310.758,45.049,346.991,45.049,391.68z" />
+                        </g>
+                    </g>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="flex items-center justify-center py-10 bg-blue-500">
+        <div class="text-left">
+            <h2 class="text-5xl font-bold mb-2 text-white">Reach your fitness goals</h2>
+            <h3 class="text-2xl font-bold mb-2 text-white"> with ShapeShifter</h3>
+            <p class="text-white leading-loose pb-6">Track your calorie intake and make necessary adjustments to achieve
+                your fitness objectives.</p>
+            <a href="register"
+                class="bg-white hover:bg-gray-100 text-blue-500 font-bold py-2 px-4 rounded-full ml-4">Start Today!</a>
+        </div>
+        <div class="ml-8">
+            <img src="{{url_for('static', filename='screenshot-placeholder.png')}}" alt="App Screenshot"
+                class="w-60% h-60% float-right">
+        </div>
+    </div>
+    <div class="text-center py-10 bg-gray-600 text-white">
+        <span class="text-4xl font-bold">⭐⭐⭐⭐⭐</span>
+        <div class="text-2xl font-bold mb-4">100+ 5 Star Reviews</div>
+        <p class="text-white mx-auto my-10">OMG!! This app changed my life or something. I was fat. Now I AM NOT FAT.</p>
+    </div>
+    <div class="text-center py-10">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Hit your health goals!!</h2>
+        <div class="flex justify-center items-center mb-8">
+            <div class="m-4 p-6 bg-white rounded-lg shadow-md">
+                <img src="{{url_for('static', filename='track-food.png')}}" alt="Track Food Image"
+                    class="w-64 h-64 mb-4 mx-auto rounded-md">
+                <p class="text-lg font-bold mb-2 text-blue-500">Track Food</p>
+                <p class="text-gray-700">Monitor your daily food intake to stay on track with your goals.</p>
+            </div>
+            <div class="mx-10 flex items-center">
+                <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
+                    </path>
+                </svg>
+            </div>
+            <div class="m-4 p-6 bg-white rounded-lg shadow-md">
+                <img src="{{url_for('static', filename='learn-what-works.png')}}" alt="Learn What Works Image"
+                    class="w-64 h-64 mb-4 mx-auto rounded-md">
+                <p class="text-lg font-bold mb-2 text-blue-500">Learn What Works</p>
+                <p class="text-gray-700">Understand what dietary choices are helping you reach your goals.</p>
+            </div>
+            <div class="mx-10 flex items-center">
+                <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
+                    </path>
+                </svg>
+            </div>
+            <div class="m-4 p-6 bg-white rounded-lg shadow-md">
+                <img src="{{url_for('static', filename='make-the-shift.png')}}" alt="Make the Shift Image"
+                    class="w-64 h-64 mb-4 mx-auto rounded-md">
+                <p class="text-lg font-bold mb-2 text-blue-500">Make the Shift</p>
+                <p class="text-gray-700">Make necessary adjustments to achieve your fitness objectives.</p>
+            </div>
+        </div>
+        <div class="text-center py-10 bg-black text-white">
+            <div class="text-3xl font-bold mb-4">If it's edible, We got it!</div>
+            <p class="text-white mx-auto ">Food tracking app with 7000+ global foods.</p>
+            <iframe class="mx-auto" width="600" height="300" src="{{ url_for('searchfood') }}" frameborder="0"></iframe>
+        </div>
+        <div class="text-center">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Features</h2>
+            <div class="flex justify-center">
+                <div class="m-4 p-6 bg-white rounded-lg shadow-md">
+                    <img src="{{url_for('static', filename='track-food.png')}}" alt="Track Food Image"
+                        class="w-64 h-64 mb-4 mx-auto rounded-md">
+                    <h3 class="text-lg font-bold mb-2 text-blue-500">Track Your Calories</h3>
+                    <p class="text-gray-700">Monitor your daily calorie intake effortlessly with our intuitive tracker.
+                    </p>
+                </div>
+                <div class="m-4 p-6 bg-white rounded-lg shadow-md">
+                    <img src="{{url_for('static', filename='learn-what-works.png')}}" alt="Graphs"
+                        class="w-64 h-64 mb-4 mx-auto rounded-md">
+                    <h3 class="text-lg font-bold mb-2 text-blue-500">Visualize Intakes</h3>
+                    <p class="text-gray-700">View graphical representations of your calorie consumption for
+                        better insights.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-8 py-12">
+            <h2 class="text-3xl font-bold mb-4">FAQ</h2>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="accordion">
+                    <div class="accordion-item border-b border-gray-200 mb-4">
+                        <h3 class="accordion-title text-lg font-semibold py-2 cursor-pointer">Q: Is ShapeShifter a free
+                            calorie tracker app?</h3>
+                        <div class="accordion-content hidden text-gray-700">
+                            <p class="mb-4">Yes! If you're looking for a free calorie counter app, you're in the
+                                right place. Simply sign up for your free account <a href="register">here</a> and start
+                                tracking your food.
+                                <br>
+                                The ShapeShifter app does a lot more than track calories in foods. You can also track
+                                nutrients and see how everything you eat supports your goals.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-b border-gray-200 mb-4">
+                        <h3 class="accordion-title text-lg font-semibold py-2 cursor-pointer">Q: How do I track my
+                            calorie intake?</h3>
+                        <div class="accordion-content hidden text-gray-700">
+                            <p class="mb-4">You can track your calorie intake using our intuitive calorie tracker
+                                feature. Simply log in to your account, enter the foods you consume, and the tracker
+                                will automatically calculate your total calorie intake.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-b border-gray-200 mb-4">
+                        <h3 class="accordion-title text-lg font-semibold py-2 cursor-pointer">Q: Can I customize my
+                            fitness goals?</h3>
+                        <div class="accordion-content hidden text-gray-700">
+                            <p class="mb-4">Yes, you can customize your fitness goals based on your preferences and
+                                objectives. Our platform allows you to set specific calorie targets, track your
+                                progress, and adjust your goals accordingly.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-b border-gray-200 mb-4">
+                        <h3 class="accordion-title text-lg font-semibold py-2 cursor-pointer">Q: Do i get some kind of
+                            nutritional goals?</h3>
+                        <div class="accordion-content hidden text-gray-700">
+                            <p class="mb-4">Yes, you get a balanced nutritional goal including your daily calories,
+                                protein intakes which are all calculated by backed up science.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-b border-gray-200 mb-4">
+                        <h3 class="accordion-title text-lg font-semibold py-2 cursor-pointer">Q: Can I add my workouts?
+                        </h3>
+                        <div class="accordion-content hidden text-gray-700">
+                            <p class="mb-4">Yes, you will be able to import your workouts from devices like apple
+                                watch and fitbits. This will be implemented soon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-blue-500 py-6">
+            <div class="container mx-auto flex justify-center items-center">
+                <div class="text-white text-center">
+                    <p>&copy; 2024 ShapeShifter. All rights reserved.</p>
+                    <p class="mt-2">Designed with ❤️ by ShapeShifter</p>
+                </div>
+            </div>
+        </footer>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const accordionItems = document.querySelectorAll('.accordion-item');
+
+                accordionItems.forEach(item => {
+                    const title = item.querySelector('.accordion-title');
+
+                    title.addEventListener('click', function () {
+                        const content = item.querySelector('.accordion-content');
+                        const isActive = content.classList.contains('active');
+
+                        accordionItems.forEach(item => {
+                            item.querySelector('.accordion-content').classList.remove('active');
+                        });
+
+                        if (!isActive) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+        </script>
+</body>
+
+</html>
+</body>

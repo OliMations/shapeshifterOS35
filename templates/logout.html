@@ -1,0 +1,12 @@
+{% extends "alt_base.html" %}
+{% block content %}
+    <div class="flex flex-col mx-auto p-8 mb-4 bg-ss-accent rounded drop-shadow-md max-w-xs">
+        <h1 class="text-4xl font-bold mb-4 text-white text-center">Successfully Logged Out!</h1>
+        <div class="flex flex-wrap drop-shadow-xl my-auto text-gray-300 gap-2 justify-center">
+            <a href="{{ url_for('login') }}"
+                class="bg-ss-blue hover:bg-ss-purple text-white px-8 py-4 rounded-md drop-shadow-md">Login Again</a>
+            <a href="{{ url_for('home') }}"
+                class="bg-ss-blue hover:bg-ss-purple text-white px-8 py-4 rounded-md drop-shadow-md">Go Home</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shapeshifter</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@700&display=swap" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+        <script src="{{ url_for('static', filename='tailwind_conf.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='logo.png') }}">
+    </head>
+
+    <body class="bg-ss-main flex h-screen flex-wrap">
+
+        <header class="w-full bg-ss-secondary py-4 px-8 max-h-20 mb-4 drop-shadow-lg ">
+            <div class="container mx-auto flex justify-between">
+                <div class="inline-flex flex items-left">
+                    <a class="text-4xl font-extrabold mb-4 text-white" href="/"><b class="text-ss-bluel">Shape</b><b class="text-ss-purplel">Shifter</b></a>
+                </div>
+                
+                <div class="inline-flex gap-5 items-center text-gray-300 text-xl font-medium">
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/graphs">Graphs</a>
+                    <a href="/addfood">Add Food</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+        <footer class="w-full mt-auto py-4 text-center text-white font-light">
+            <p>©2024 Team 34 "Shapeshifter"</p>
+        </footer>
+    </body>
+</html>
